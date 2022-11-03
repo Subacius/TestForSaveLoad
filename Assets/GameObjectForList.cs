@@ -8,7 +8,7 @@ using SaveLoadSystem;
 public class GameObjectForList : MonoBehaviour, ISaveable
 {
 
-    public List<string> gameObjects = new List<string>();
+    
 
     private GameObject [] enemies;
 
@@ -30,9 +30,7 @@ public class GameObjectForList : MonoBehaviour, ISaveable
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        foreach (GameObject go in enemies) {
-            gameObjects.Add(go.GetComponent<SaveableEntity>().GetID());
-        }
+        
 
 
         // pfCube = GameObject.Find("CubePrefabs");
@@ -62,6 +60,12 @@ public class GameObjectForList : MonoBehaviour, ISaveable
     }
     public object SaveState()
     {
+        // Only read the ID when you save the Object. Otherwise you don't need the ID saved in this class
+        List<string> gameObjects = new List<string>();
+        foreach (GameObject go in enemies)
+        {
+            gameObjects.Add(go.GetComponent<SaveableEntity>().GetID());
+        }
         // List<GameObject> primeGameObject = new List<GameObject>();
         // Instantiate the struct which contains the data we want to save and return it as object
         return new PlayerData()
@@ -78,7 +82,7 @@ public class GameObjectForList : MonoBehaviour, ISaveable
                                              // cast to extract our loaded data
         this.age = data.age;
         this.language = data.language;
-        this.gameObjects = data.primeGameObject;
+        //this.gameObjects = data.primeGameObject;
         // playerAmountDictionary = data.tempDictionary;
     }
     public bool NeedsToBeSaved()
@@ -117,6 +121,24 @@ public class GameObjectForList : MonoBehaviour, ISaveable
         // You may want to store the targets ID, so you can load back to the right object.
         // Call: obj.id on the SaveableEntity component of your target to get the ID
 
+        List<string> gameObjects = data.primeGameObject;
+        List<GameObject> foundEnemies = new List<GameObject>();
+        foreach (string go in gameObjects)
+        {
+            // Search for Objects with a given ID
+            SaveableEntity obj = SaveableEntity.FindID(go);
+            if(obj)
+            {
+                // Found a anemy with the saved ID
+                foundEnemies.Add(obj.gameObject);
+                Debug.Log("Enemy with ID: " + go + " found.");
+            }
+            else
+            {
+                Debug.Log("No enemy with ID: " + go + " found.");
+            }
+        }
+        enemies = foundEnemies.ToArray();
     }
 
 }
