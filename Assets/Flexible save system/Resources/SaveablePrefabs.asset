@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SaveablePrefabs
   m_EditorClassIdentifier: 
   m_prefabs:
+  - {fileID: 5706045888629151397, guid: 39d0ea712d054a3419a8bbf74acb03dd, type: 3}
   - {fileID: 2706250349554502651, guid: 0785d2e01b40b15469419a14efe30804, type: 3}
   - {fileID: 7356466013147634849, guid: de18eb958a92a1b458ad993222813899, type: 3}
   - {fileID: 6475114108107091602, guid: 107dc2ef46aa38a44b7f1ca19ec8c302, type: 3}

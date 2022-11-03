@@ -8,9 +8,11 @@ using SaveLoadSystem;
 public class GameObjectForList : MonoBehaviour, ISaveable
 {
 
-    public List<GameObject> gameObjects = new List<GameObject>();
+    public List<string> gameObjects = new List<string>();
 
-    [SerializeField] private GameObject pfCube;
+    private GameObject [] enemies;
+
+    private GameObject pfCube;
 
     public int age;
 
@@ -18,11 +20,23 @@ public class GameObjectForList : MonoBehaviour, ISaveable
     // Start is called before the first frame update
     void Start()
     {
-        gameObjects.Add(pfCube);
-        pfCube.transform.position = new Vector3(-2, -2 , 0);
-        gameObjects.Add(pfCube);
-        pfCube.transform.position = new Vector3(-5, -5 , 0);
-        Debug.Log(pfCube.transform.position);
+        // gameObjects.Add(pfCube.GetComponent<SaveableEntity>().GetID());
+        // Debug.Log(pfCube.GetComponent<SaveableEntity>().GetID() + " 1 Id");
+        // pfCube.transform.position = new Vector3(-2, -2 , 0);
+        // gameObjects.Add(pfCube.GetComponent<SaveableEntity>().GetID());
+        // Debug.Log(pfCube.GetComponent<SaveableEntity>().GetID() + " 2 Id");
+        // pfCube.transform.position = new Vector3(-5, -5 , 0);
+        // Debug.Log(pfCube.transform.position);
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject go in enemies) {
+            gameObjects.Add(go.GetComponent<SaveableEntity>().GetID());
+        }
+
+
+        // pfCube = GameObject.Find("CubePrefabs");
+        // gameObjects.Add(pfCube.GetComponent<SaveableEntity>().GetID());
     }
 
     // Update is called once per frame
@@ -44,7 +58,7 @@ public class GameObjectForList : MonoBehaviour, ISaveable
         public int age;
         public string language;
         // public Dictionary<PlayerTypeSO, int> tempDictionary;
-        public List<GameObject> primeGameObject;
+        public List<string> primeGameObject;
     }
     public object SaveState()
     {
