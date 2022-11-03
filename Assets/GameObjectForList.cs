@@ -10,7 +10,7 @@ public class GameObjectForList : MonoBehaviour, ISaveable
 
     
 
-    private GameObject [] enemies;
+    [SerializeField] private GameObject [] enemies;
 
     private GameObject pfCube;
 
